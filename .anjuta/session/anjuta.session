@@ -1,0 +1,28 @@
+[Anjuta]
+Geometry=976x730+0+85
+
+[File Loader]
+Files=../../src/main.cc#149
+
+[Document Manager]
+bookmarks=<?xml version="1.0" encoding="UTF-8"?>\n<bookmarks/>\n
+
+[Execution]
+Program uri=../../src/i2c_relay
+Run in terminal=2
+Working directories=../../.
+
+[Project Manager]
+Shortcut=i2c_relay//src//i2c_relay
+Expand=i2c_relay%%%i2c_relay//src%%%i2c_relay//src//i2c_relay%%%i2c_relay//dist_doc
+
+[Build]
+Configuration list=1:Default:%%%1:Debug:Debug%%%1:Profiling:Profiling%%%1:Optimized:Optimized%%%1:MinGW32:MinGW32
+Selected Configuration=Default
+BuildArgs/Default=--enable-maintainer-mode
+BuildArgs/Debug=--enable-maintainer-mode 'CFLAGS=-g -O0' 'CXXFLAGS=-g -O0' 'JFLAGS=-g -O0' 'FFLAGS=-g -O0'
+BuildArgs/Profiling=--enable-maintainer-mode 'CFLAGS=-g -pg' 'CXXFLAGS=-g -pg' 'JFLAGS=-g -pg' 'FFLAGS=-g -pg'
+BuildArgs/Optimized=--enable-maintainer-mode 'CFLAGS=-O2' 'CXXFLAGS=-O2' 'JFLAGS=-O2' 'FFLAGS=-O2'
+
+[Debugger]
+Stop at beginning=2
