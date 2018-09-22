@@ -1,6 +1,6 @@
 #! /bin/sh
-# Generated automatically by config.status (i2c_relay) 0.1
-# Libtool was configured on host n53sv:
+# Generated automatically by config.status (i2c_relay) 1.0
+# Libtool was configured on host station:
 # NOTE: Changes made to this file will be lost: look at ltmain.sh.
 
 # Provide generalized library-building support services.
@@ -136,7 +136,7 @@ file_magic_glob=""
 want_nocaseglob="no"
 
 # DLL creation program.
-DLLTOOL="dlltool"
+DLLTOOL="false"
 
 # Command to associate shared and link libraries.
 sharedlib_from_linklib_cmd="printf %s\\n"
@@ -282,10 +282,10 @@ finish_eval=""
 hardcode_into_libs=yes
 
 # Compile-time system search path for libraries.
-sys_lib_search_path_spec="/usr/lib/gcc/x86_64-pc-linux-gnu/6.4.0 /usr/lib64 /lib64 /usr/x86_64-pc-linux-gnu/lib /usr/lib /lib "
+sys_lib_search_path_spec="/usr/lib/gcc/x86_64-pc-linux-gnu/7.3.0 /usr/lib64 /lib64 /usr/x86_64-pc-linux-gnu/lib /usr/lib /lib "
 
 # Detected run-time system search path for libraries.
-sys_lib_dlsearch_path_spec="/lib /usr/lib /usr/lib/gcc/x86_64-pc-linux-gnu/6.4.0/32 /usr/lib/gcc/x86_64-pc-linux-gnu/6.4.0 /usr/lib/llvm/5/lib32 /usr/lib/llvm/5/lib64 /usr/lib64/itcl4.0.3/ /usr/lib32/qt4 /usr/lib64/qt4 /lib64 /usr/lib64 /usr/local/lib64 /lib32 /usr/lib32 /usr/local/lib32 /lib /usr/lib /usr/local/lib /usr/lib64/hamlib /usr/games/lib64 /usr/games/lib32 /usr/games/lib /usr/lib64/R/lib /usr/lib64/fltk /opt/root/6.12/lib64 "
+sys_lib_dlsearch_path_spec="/lib /usr/lib /usr/lib/gcc/x86_64-pc-linux-gnu/7.3.0/32 /usr/lib/gcc/x86_64-pc-linux-gnu/7.3.0 /usr/lib/llvm/6/lib32 /usr/lib/llvm/6/lib64 /usr/lib64/itcl4.0.3/ /usr/lib64/itk4.0.1/ /lib64 /usr/lib64 /usr/local/lib64 /lib32 /usr/lib32 /usr/local/lib32 /lib /usr/lib /usr/local/lib /usr/lib64/rust-1.28.0 /usr/lib64/hamlib /usr/lib64/fltk /usr/lib64/octave/4.4.0 "
 
 # Explicit LT_SYS_LIBRARY_PATH set during ./configure time.
 configure_time_lt_sys_library_path=""
@@ -11845,17 +11845,17 @@ file_list_spec=""
 hardcode_action=immediate
 
 # The directories searched by this compiler when creating a shared library.
-compiler_lib_search_dirs="/usr/lib/gcc/x86_64-pc-linux-gnu/6.4.0 /usr/lib/gcc/x86_64-pc-linux-gnu/6.4.0/../../../../lib64 /lib/../lib64 /usr/lib/../lib64 /usr/lib/gcc/x86_64-pc-linux-gnu/6.4.0/../../../../x86_64-pc-linux-gnu/lib /usr/lib/gcc/x86_64-pc-linux-gnu/6.4.0/../../.."
+compiler_lib_search_dirs="/usr/lib/gcc/x86_64-pc-linux-gnu/7.3.0 /usr/lib/gcc/x86_64-pc-linux-gnu/7.3.0/../../../../lib64 /lib/../lib64 /usr/lib/../lib64 /usr/lib/gcc/x86_64-pc-linux-gnu/7.3.0/../../../../x86_64-pc-linux-gnu/lib /usr/lib/gcc/x86_64-pc-linux-gnu/7.3.0/../../.."
 
 # Dependencies to place before and after the objects being linked to
 # create a shared library.
-predep_objects="/usr/lib/gcc/x86_64-pc-linux-gnu/6.4.0/../../../../lib64/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/6.4.0/crtbeginS.o"
-postdep_objects="/usr/lib/gcc/x86_64-pc-linux-gnu/6.4.0/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/6.4.0/../../../../lib64/crtn.o"
+predep_objects="/usr/lib/gcc/x86_64-pc-linux-gnu/7.3.0/../../../../lib64/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/7.3.0/crtbeginS.o"
+postdep_objects="/usr/lib/gcc/x86_64-pc-linux-gnu/7.3.0/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/7.3.0/../../../../lib64/crtn.o"
 predeps=""
 postdeps="-lstdc++ -lm -lgcc_s -lc -lgcc_s"
 
 # The library search path used internally by the compiler when linking
 # a shared library.
-compiler_lib_search_path="-L/usr/lib/gcc/x86_64-pc-linux-gnu/6.4.0 -L/usr/lib/gcc/x86_64-pc-linux-gnu/6.4.0/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-pc-linux-gnu/6.4.0/../../../../x86_64-pc-linux-gnu/lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/6.4.0/../../.."
+compiler_lib_search_path="-L/usr/lib/gcc/x86_64-pc-linux-gnu/7.3.0 -L/usr/lib/gcc/x86_64-pc-linux-gnu/7.3.0/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-pc-linux-gnu/7.3.0/../../../../x86_64-pc-linux-gnu/lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/7.3.0/../../.."
 
 # ### END LIBTOOL TAG CONFIG: CXX

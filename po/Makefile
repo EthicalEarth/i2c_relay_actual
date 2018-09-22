@@ -19,7 +19,7 @@
 
 GETTEXT_PACKAGE = i2c_relay
 PACKAGE = i2c_relay
-VERSION = 0.1
+VERSION = 1.0
 
 SHELL = /bin/sh
 
