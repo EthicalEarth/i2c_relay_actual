@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/andrey/projects/i2c_relay/main.cpp
+iostream
+-
+bitset
+-
+string.h
+-
+stdio.h
+-
+fcntl.h
+-
+linux/i2c-dev.h
+-
+errno.h
+-
+sys/ioctl.h
+-
+unistd.h
+-
+
