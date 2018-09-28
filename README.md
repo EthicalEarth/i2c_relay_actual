@@ -6,11 +6,11 @@ FAQ:
 
 -Very easy:
 
-0) git clone https://github.com/EthicalEarth/i2c_relay
-1) cd i2c_relay
-2) run cmake .
-3) run make
-4) run ls and you can see i2c_relay binary file.
+0) run: git clone https://github.com/EthicalEarth/i2c_relay
+1) run: cd i2c_relay
+2) run: cmake .
+3) run: make
+4) run: ls,  and you can see i2c_relay binary file.
 
 -How to control relay module?
 
