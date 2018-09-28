@@ -24,6 +24,6 @@ You can make adapter via PCB [https://github.com/EthicalEarth/i2c_relay_PCB_BOAR
 -Address of my chip is not 0x38. Program not work.
 
 0) Get address by cmdline: i2cdetect -y 1
-1) Open file main.cc and change address.
+1) Open file main.cpp and change address.
 2) Compile programm.
 Same too if your i2c adapter is not /dev/i2c-1, just change it in function readwritebuffer.
