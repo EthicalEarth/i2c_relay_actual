@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/andrey/i2c_relay/main.cpp
+/home/andrey/projects/i2c_relay/main.cpp
 iostream
 -
 bitset

@@ -1,1 +1,1 @@
-/usr/bin/c++  -g  -rdynamic CMakeFiles/i2c_relay.dir/main.cpp.o  -o i2c_relay 
+/usr/bin/c++  -lconfig++ -std=c++11  -rdynamic CMakeFiles/i2c_relay.dir/main.cpp.o  -o i2c_relay 

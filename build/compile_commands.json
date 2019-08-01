@@ -1,7 +1,7 @@
 [
 {
   "directory": "/home/andrey/projects/i2c_relay/build",
-  "command": "/usr/bin/c++    -g   -o CMakeFiles/i2c_relay.dir/main.cpp.o -c /home/andrey/projects/i2c_relay/main.cpp",
+  "command": "/usr/bin/c++    -lconfig++ -std=c++11 -g   -o CMakeFiles/i2c_relay.dir/main.cpp.o -c /home/andrey/projects/i2c_relay/main.cpp",
   "file": "/home/andrey/projects/i2c_relay/main.cpp"
 }
 ]

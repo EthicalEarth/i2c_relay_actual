@@ -26,27 +26,45 @@
 #include <errno.h>
 #include <sys/ioctl.h>
 #include <unistd.h>
-//add libconfig support
-//#include <libconfig.h>
-//using namespace libconfig;
 
 
-#define I2C_ADDR 0x38           //Адрес устройства
-#define INVERT 1                //Необходимость инвертирования результата
+#include <iostream>
+#include <iomanip>
+#include <cstdlib>
+#include <libconfig.h++>
+#include <ctype.h>
+#include <type_traits>
+
+using namespace std;
+using namespace libconfig;
+
+
+int I2C_ADDR;
+int INVERT;
+int DEVICE;
+int LENGTH;
+
+std::string DIRECTION;
+std::string  HUB;
+
+
+//#define I2C_ADDR 0x38           //Адрес устройства
+//#define INVERT 1                //Необходимость инвертирования результата
 
                                 //Для PCF8574, нужно инвертировать при работе с релейным модулем.
 int readwritebuffer(int mode, std::bitset<8> buffer){
 char i2cbuffer[1];              //Выделяем буфер для чтения
 int i2cfd;                      //Создаем индификатор файла
-
-i2cfd = open("/dev/i2c-1", O_RDWR); //Открываем файл
+char* c = &*HUB.begin();
+//printf("\n",c);
+i2cfd = open(c, O_RDWR); //Открываем файл
 if (i2cfd < 0) {                    //Проверка возможности открытия
 	printf("Error opening device file: %s\n", strerror(errno));
-    exit(0);                        //Выход из программы, если устройство не определено.
+    exit(0);// !!!                       //Выход из программы, если устройство не определено.
 }
 if (ioctl(i2cfd, I2C_SLAVE, I2C_ADDR) < 0) {  //Проверяем устройство на наличие
 	printf("ioctl error: %s\n", strerror(errno));
-    exit(0);                        //Выход из программы, если устройство не определено.
+    exit(0); //!!!                       //Выход из программы, если устройство не определено.
 }
 
 
@@ -105,58 +123,282 @@ if (INVERT){
 readwritebuffer(1,buffer);	
 }
 
+int readconfig(void){
+    
+  Config cfg;
 
+  // Read the file. If there is an error, report it and exit.
+  try
+  {
+    cfg.readFile("/etc/i2c_relay.cfg");
+  }
+  catch(const FileIOException &fioex)
+  {
+    std::cerr << "I/O error while reading file." << std::endl;
+    return(EXIT_FAILURE);
+  }
+  catch(const ParseException &pex)
+  {
+    std::cerr << "Parse error at " << pex.getFile() << ":" << pex.getLine()
+              << " - " << pex.getError() << std::endl;
+    return(EXIT_FAILURE);
+  }
+
+  // Get the store name.
+  try
+  {
+    string name = cfg.lookup("name");
+    cout << "Store name: " << name << endl << endl;
+  }
+  catch(const SettingNotFoundException &nfex)
+  {
+    cerr << "No 'name' setting in configuration file." << endl;
+  }
+
+  const Setting& root = cfg.getRoot();
+
+  // Output a list of all devices in the tree.
+  try
+  {
+    const Setting &devices = root["devices"];
+    int count = devices.getLength();
+    cout << "____________________________CONFIGURATION MAP____________________________"<<endl;
+    
+    cout << setw(7) << left << "Device" << "  "
+         << setw(10) << left << "Address" << "   "
+         << setw(15) << left << "Lenght" << "  "
+         << setw(10) << left << "Inversion" << "  "
+         << setw(10) << left << "Direction" << "  "
+         << setw(10) << left << "Hub" << "  "         
+         << endl;
+
+    for(int i = 0; i < count; ++i)
+    {
+      const Setting &output = devices[i];
+
+      // Only output the record if all of the expected fields are present.
+      int device, address;
+      int length;
+      string direction;
+      int inversion;
+      string hub;
+
+    
+      if(!(output.lookupValue("device", device)
+           && output.lookupValue("address", address)
+           && output.lookupValue("length", length)
+           && output.lookupValue("direction", direction)           
+           && output.lookupValue("inversion", inversion)
+           && output.lookupValue("hub", hub) 
+      ))
+        continue;
+      cout << setw(7) << left << device << "  "
+           << setw(11) << left << address << "  "
+           << setw(15) << left << length << "  "         
+           << setw(10) << left << inversion << "  "
+           << setw(10) << left << direction << "  "
+           << setw(10) << left << hub << "  "
+           << endl;
+    }    
+    cout << "__________________________END CONFIGURATION MAP___________________________"<<endl;
+    cout << endl;
+
+  }
+  catch(const SettingNotFoundException &nfex)
+  {
+    // Ignore.
+  }    
+    
+
+    try
+    {
+    const Setting &devices = root["devices"];
+    int count = devices.getLength();
+
+    //cout << setw(7) << left << "Device" << "  "  << endl;
+
+    for(int i = 0; i < count; ++i)
+    {
+        const Setting &output = devices[i];
+
+      // Only output the record if all of the expected fields are present.
+        int device, address;
+        int length;
+        string direction;
+        int inversion;
+        string hub;
+
+    if(!(output.lookupValue("device", device)
+           && output.lookupValue("address", address)
+           && output.lookupValue("length", length)
+           && output.lookupValue("direction", direction)           
+           && output.lookupValue("inversion", inversion)
+           && output.lookupValue("hub", hub) 
+    ))
+        continue;
+
+    cout << endl;
+
+	if (device == DEVICE){
+        DEVICE=device;
+        I2C_ADDR=address;
+        LENGTH=length;
+        DIRECTION=direction;
+        INVERT=inversion;
+        HUB=hub;
+        cout << "______________________________DEVICE FOUND_______________________________" <<endl;
+        cout <<  setw(10) << "N:" << i << endl;
+        cout <<  setw(10) << "Device: " << DEVICE << endl;
+        cout <<  setw(10) << "Adress:"<<I2C_ADDR<<endl;    
+        cout <<  setw(10) << "Lenght:"<<LENGTH<<endl;
+        cout <<  setw(10) << "Invert:"<<INVERT<<endl;        
+        cout <<  setw(10) << "Hub:"<< HUB<<endl;            
+        cout << "_________________________________________________________________________"<<endl;
+    break;
+    }
+ 
+    }    
+  
+    cout << endl;
+
+    }
+
+    catch(const SettingNotFoundException &nfex)
+    {
+    // Ignore.
+    }  
+    
+    
+    
+    
+    
+   
+}
 									/****Main****/
 int main(int argc, char **argv){
 
+
 	//int pcfbuf;
-	int pcfbuf = readwritebuffer(0,0);        //Выделяем локальную переменную под прочитанный буфер микросхемы
-	
-	
-	std::bitset<8> buffer = pcfbuf;           //Выделение слова для чипа.
+	//int pcfbuf = readwritebuffer(0,0);        //Выделяем локальную переменную под прочитанный буфер микросхемы
+	//std::bitset<8> buffer = pcfbuf;           //Выделение слова для чипа.
 	int relay=1,status=0;                     //Порядковый номер реле, его статус
 	                                          //Начальные данные.
+    
+    
+
+
+ 
+    
+
+    
+ 
 if(argc <= 1) {
 
 	printf("\n");
 	printf("syntax : \n\t%s --help\n", argv[0]);
-	printf("\t%s --set [relay] [status]\n ", argv[0]);
-	printf("\t%s --reset\n ", argv[0]);	   
+	printf("\t%s --dev [number] --set [relay] [status]\n ", argv[0]);
+	printf("\t%s --dev [number] --reset\n ", argv[0]);	   
 return 0;
-   }
+};
 
 if(!strcmp(argv[1], "--help")) {
     printf("You requested help message.\n");
-};// else 
+    
+    printf("\n");
+	printf("syntax : \n\t%s --help\n", argv[0]);
+	printf("\t%s --device [number] --set [relay] [status]\n ", argv[0]);
+	printf("\t%s --device [number] --reset\n ", argv[0]);	
+    
+};
 
-if(!strcmp(argv[1], "--set")) {
-    if(argc <=3|argc >=5) {
-         printf("'--set' operation requires two parameters.\n");
+//    printf("AGR%d\n", argc);
+if(!strcmp(argv[1], "--device")){
+//:1 --set
+if (argc <= 3 ){
+printf("'--device' operation requires parameter [device number] and operation [--set] or [--reset].\n");
+exit;
+} 
+};
+
+if (((argc > 6)|| (argc <= 5))&& (argc > 4)){
+ if  ((!strcmp(argv[1], "--device"))&&(!strcmp(argv[3], "--set")))  {  
+    printf("'--set' operation requires two integer parameters.\n");
+    exit;
+}; 
+};
+
+if (argc == 6){
+ if  ((!strcmp(argv[1], "--device"))&&(!strcmp(argv[3], "--set")))  {  
+    if(sscanf(argv[4], "%d", &relay) != 1 || sscanf(argv[5], "%d", &status) != 1) {
+    printf("'--set' operation requires two integer parameters.\n");
+    exit;
     } else {
-            if(sscanf(argv[2], "%d", &relay) != 1 || sscanf(argv[3], "%d", &status) != 1) {
-            	printf("'--set' operation requires two integer parameters.\n");
-            } else {
-				if (relay<1|relay>8) {printf("Wrong value. Index of relay can be only 1-8.\n");return 0;}
-				set(buffer,relay-1,status);             //запрос
-								
-            }
+    cout << "accept command"<<endl;
+    if(sscanf(argv[2], "%d", &DEVICE) != 1 ){
+            printf("'--set' operation requires 1 integer parameter.\n");
+            exit;
     }
+
+    readconfig();
+    
+    if (relay<1|relay>LENGTH) {printf("Wrong value. Index of relay can be only 1-%d\n", LENGTH,"."); return 0;}
+    int pcfbuf = readwritebuffer(0,0);
+    std::bitset<8> buffer = pcfbuf;   
+    
+	set(buffer,relay-1,status);             //запрос
+    
+    } 
+    
+}; 
 };
 
 
-if(!strcmp(argv[1], "--reset")) {
-	if(argc >= 3) {
-		printf("'--reset' operation not requires parameters.\n"); 
-		} else {
-		reset(buffer);                                  //запрос  
-		}
-};
-	
-if(not(!strcmp(argv[1], "--set")|!strcmp(argv[1], "--reset")|!strcmp(argv[1], "--help"))){
+
+
+
+
+
+if ((argc >= 4) ){
+    if(!strcmp(argv[3], "--reset")){
+        if(argc > 4){
+        printf("'--reset' operation no requires parameters.\n");
+        exit;
+    } 
+    else {
+        if(sscanf(argv[2], "%d", &DEVICE) != 1 ){
+            printf("'--set' operation requires 1 integer parameter.\n");
+            exit;
+    } else {
+        
+    cout << "accept command"<<endl;
+    
+    
+    readconfig();
+
+    int pcfbuf = readwritebuffer(0,0);
+    std::bitset<8> buffer = pcfbuf;     
+    reset(buffer);  
+    } 
+
+    
+    }
+    } 
+}; 
+
+
+
+if(not(!strcmp(argv[1], "--device")||!strcmp(argv[1], "--help"))){
 	printf("Unknown parameter: '%s'. Type %s --help for help.\n", argv[1], argv[0]);
+    exit;
+};
+if (argc>3){
+if(not(!strcmp(argv[3], "--reset")||!strcmp(argv[3], "--set"))){
+	printf("Unknown parameter: '%s'. Type %s --help for help.\n", argv[3], argv[0]);
+    exit;
+}
 };
 
+
+return 0;    
 }
-
-
 

@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/andrey/i2c_relay/main.cpp" "/home/andrey/i2c_relay/build/CMakeFiles/i2c_relay.dir/main.cpp.o"
+  "/home/andrey/projects/i2c_relay/main.cpp" "/home/andrey/projects/i2c_relay/CMakeFiles/i2c_relay.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

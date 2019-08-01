@@ -1,0 +1,7 @@
+/home/andrey/projects/i2c_relay/CMakeFiles/install/strip.dir
+/home/andrey/projects/i2c_relay/CMakeFiles/edit_cache.dir
+/home/andrey/projects/i2c_relay/CMakeFiles/i2c_relay.dir
+/home/andrey/projects/i2c_relay/CMakeFiles/rebuild_cache.dir
+/home/andrey/projects/i2c_relay/CMakeFiles/list_install_components.dir
+/home/andrey/projects/i2c_relay/CMakeFiles/install/local.dir
+/home/andrey/projects/i2c_relay/CMakeFiles/install.dir
