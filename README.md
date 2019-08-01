@@ -24,7 +24,7 @@
 - You can reset all relays: ./i2c_relay --device [device number] --reset
 (In my program first relay connect to fisrt GPIO of PCF8574). 
 
-You can make adapter via PCB [https://github.com/EthicalEarth/i2c_relay_PCB_BOARD] (See [https://github.com/EthicalEarth/i2c_relay_PCB_BOARD/blob/master/PCB1.pdf])
+You can make adapter via PCB [https://github.com/EthicalEarth/i2c_relay_PCB_BOARD] (See [https://github.com/EthicalEarth/i2c_relay_PCB_BOARD/blob/master/PDF_NEXT_RE_FOR_PRINT.pdf])
 
 - Address of my chip is not 0x38. Program not work.
 
