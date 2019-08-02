@@ -1,10 +1,10 @@
 ﻿# Hello! This is i2c_relay program's page.
 
-* NEW
+﻿# NEW
 
     Now program support configuration file.
 
-* FAQ:
+﻿# FAQ:
 
 - How to get your program?
 
@@ -35,7 +35,7 @@ You can make adapter via PCB [https://github.com/EthicalEarth/i2c_relay_PCB_BOAR
 
 
 
-* NEW
+﻿# NEW
 
     Now program support configuration file.
 Configuration file stored in /etc/i2c_relay.cfg
@@ -51,7 +51,7 @@ and access path to the bus /dev/i2c.
     You also do not have to give the program "unforgettable" addresses
 to control a specific device.
 
-* IMPORTANT
+﻿# IMPORTANT
 
 The configuration file contains the following required fields:
 
@@ -69,12 +69,12 @@ devices = (   { device  = 01;
                 hub = "/dev/i2c-1"; }
           );
           
-1) devices - Mandatory field denoting a group of devices.
-2) device - Unique device number. This is where you turn to a specific port expander.
-3) address - The unique address of the port expander device. You can find out a unique number by connecting the device to the bus and typing the command: i2cdetect -y 1 (1 - number of bus, /dev/i2c-1).
-4) length - The maximum number of exits allowed for program management.
+0) devices - Mandatory field denoting a group of devices.
+1) device - Unique device number. This is where you turn to a specific port expander.
+2) address - The unique address of the port expander device. You can find out a unique number by connecting the device to the bus and typing the command: i2cdetect -y 1 (1 - number of bus, /dev/i2c-1).
+3) length - The maximum number of exits allowed for program management.
 Since the program works with PCF8574 and this device is a 3-bit port extender, the maximum number is 8.
 You can specify from 1 to 8. The program will prohibit working with outputs, the ordinal number of which is greater than that recorded in the configuration file.
-5) direction - Сan be "out" and "in". This setting was created as reserved for future releases.
-6) inversion - Allows you to invert the value of the buffer programmatically for the user in order to be compatible with various relay modules that are activated 1 or 0.
-7) hub - path to the i2c bus file of the Linux device pseudo filesystem.
+4) direction - Сan be "out" and "in". This setting was created as reserved for future releases.
+5) inversion - Allows you to invert the value of the buffer programmatically for the user in order to be compatible with various relay modules that are activated 1 or 0.
+6) hub - path to the i2c bus file of the Linux device pseudo filesystem.
