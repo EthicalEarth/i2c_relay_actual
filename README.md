@@ -1,4 +1,5 @@
 # Hello! This is i2c_relay program's page.
+NEW VERSION AVAILABLE: [https://github.com/EthicalEarth/i2c_relay/tree/v2.0]
 
 FAQ:
 
