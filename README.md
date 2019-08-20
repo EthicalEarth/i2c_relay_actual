@@ -10,7 +10,7 @@
 
 - Very easy:
 
-0) git clone https://github.com/EthicalEarth/i2c_relay
+0) git clone -b v2.0 https://github.com/EthicalEarth/i2c_relay
 1) cd i2c_relay
 2) mkdir build / cd build
 2) run cmake ..
