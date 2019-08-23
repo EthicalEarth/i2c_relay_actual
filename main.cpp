@@ -48,23 +48,23 @@ std::string DIRECTION;
 std::string  HUB;
 
 
-//#define I2C_ADDR 0x38           //Адрес устройства
-//#define INVERT 1                //Необходимость инвертирования результата
+//#define I2C_ADDR 0x38              //Адрес устройства
+//#define INVERT 1                   //Необходимость инвертирования результата
 
-                                //Для PCF8574, нужно инвертировать при работе с релейным модулем.
+                                     //Для PCF8574, нужно инвертировать при работе с релейным модулем.
 int readwritebuffer(int mode, std::bitset<8> buffer){
-char i2cbuffer[1];              //Выделяем буфер для чтения
-int i2cfd;                      //Создаем индификатор файла
+char i2cbuffer[1];                   //Выделяем буфер для чтения
+int i2cfd;                           //Создаем индификатор файла
 char* c = &*HUB.begin();
-//printf("\n",c);
-i2cfd = open(c, O_RDWR); //Открываем файл
-if (i2cfd < 0) {                    //Проверка возможности открытия
+
+i2cfd = open(c, O_RDWR);             //Открываем файл
+if (i2cfd < 0) {                     //Проверка возможности открытия
 	printf("Error opening device file: %s\n", strerror(errno));
-    exit(0);// !!!                       //Выход из программы, если устройство не определено.
+    exit(0);// !!!                   //Выход из программы, если устройство не определено.
 }
-if (ioctl(i2cfd, I2C_SLAVE, I2C_ADDR) < 0) {  //Проверяем устройство на наличие
+if (ioctl(i2cfd, I2C_SLAVE, I2C_ADDR) < 0) {       //Проверяем устройство на наличие
 	printf("ioctl error: %s\n", strerror(errno));
-    exit(0); //!!!                       //Выход из программы, если устройство не определено.
+    exit(0); //!!!                                 //Выход из программы, если устройство не определено.
 }
 
 
@@ -77,9 +77,9 @@ return i2cbuffer[0];                                          //Возвраща
 }
 if(mode==1){
 	i2cbuffer[0]=(int)(buffer.to_ulong());
-	write(i2cfd,i2cbuffer, 1);  //Пишем состояние реле
+	write(i2cfd,i2cbuffer, 1);                                //Пишем состояние реле
 	close (i2cfd);
-	printf("Writed data in buffer: 0x%02X\n", i2cbuffer[0]);         //Печатаем на экран	
+	printf("Writed data in buffer: 0x%02X\n", i2cbuffer[0]);  //Печатаем на экран	
 	}	
 }
 
@@ -215,7 +215,7 @@ int readconfig(void){
     const Setting &devices = root["devices"];
     int count = devices.getLength();
 
-    //cout << setw(7) << left << "Device" << "  "  << endl;
+
 
     for(int i = 0; i < count; ++i)
     {
@@ -296,8 +296,8 @@ if(argc <= 1) {
 
 	printf("\n");
 	printf("syntax : \n\t%s --help\n", argv[0]);
-	printf("\t%s --dev [number] --set [relay] [status]\n ", argv[0]);
-	printf("\t%s --dev [number] --reset\n ", argv[0]);	   
+	printf("\t%s --device [number] --set [relay] [status]\n ", argv[0]);
+	printf("\t%s --device [number] --reset\n ", argv[0]);	   
 return 0;
 };
 
@@ -311,9 +311,9 @@ if(!strcmp(argv[1], "--help")) {
     
 };
 
-//    printf("AGR%d\n", argc);
+
 if(!strcmp(argv[1], "--device")){
-//:1 --set
+
 if (argc <= 3 ){
 printf("'--device' operation requires parameter [device number] and operation [--set] or [--reset].\n");
 exit;
@@ -370,8 +370,6 @@ if ((argc >= 4) ){
             exit;
     } else {
         
-    cout << "accept command"<<endl;
-    
     
     readconfig();
 
