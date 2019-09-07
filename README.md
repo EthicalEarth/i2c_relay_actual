@@ -64,7 +64,7 @@ devices = (   { device  = 01;
               { device  = 02;
                 address = 0x38;
                 start = 0;
-                length  = 8;
+                length  = 7;
                 inversion=1;
                 hub = "/dev/i2c-1"; }
           );
