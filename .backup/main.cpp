@@ -48,6 +48,11 @@ int START;
 //std::string DIRECTION;
 std::string  HUB;
 
+
+//#define I2C_ADDR 0x38              //Адрес устройства
+//#define INVERT 1                   //Необходимость инвертирования результата
+
+                                     //Для PCF8574, нужно инвертировать при работе с релейным модулем.
 int readwritebuffer(int mode, std::bitset<8> buffer){
 char i2cbuffer[1];                   //Выделяем буфер для чтения
 int i2cfd;                           //Создаем индификатор файла
@@ -123,7 +128,7 @@ int readconfig(void){
     
   Config cfg;
 
-  // Читаем файл. Если получаем ошибку, отчитываемся о ней и выходим.
+  // Read the file. If there is an error, report it and exit.
   try
   {
     cfg.readFile("/etc/i2c_relay.cfg");
@@ -140,7 +145,7 @@ int readconfig(void){
     return(EXIT_FAILURE);
   }
 
-  // Читаем имя хранилища.
+  // Get the store name.
   try
   {
     string name = cfg.lookup("name");
@@ -153,7 +158,7 @@ int readconfig(void){
 
   const Setting& root = cfg.getRoot();
 
-  // Выводим список всех устройств.
+  // Output a list of all devices in the tree.
   try
   {
     const Setting &devices = root["devices"];
@@ -174,7 +179,7 @@ int readconfig(void){
     {
       const Setting &output = devices[i];
 
-      // Выводим запись, только если присутствуют какие-либо из ожидаемых полей.
+      // Only output the record if all of the expected fields are present.
       int device, address;
       int length;
       //string direction;
@@ -225,7 +230,7 @@ int readconfig(void){
     {
         const Setting &output = devices[i];
 
-      // Выводим запись, только если присутствуют какие-либо из ожидаемых полей.
+      // Only output the record if all of the expected fields are present.
         int device, address;
         int length;
         //string direction;
@@ -284,9 +289,21 @@ int readconfig(void){
 									/****Main****/
 int main(int argc, char **argv){
 
-int relay=0,status=0;                          //Порядковый номер реле, его статус
-	                                           //Начальные данные.
 
+	//int pcfbuf;
+	//int pcfbuf = readwritebuffer(0,0);        //Выделяем локальную переменную под прочитанный буфер микросхемы
+	//std::bitset<8> buffer = pcfbuf;           //Выделение слова для чипа.
+	int relay=1,status=0;                          //Порядковый номер реле, его статус
+	                                          //Начальные данные.
+    
+    
+
+
+ 
+    
+
+    
+ 
 if(argc <= 1) {
 
 	printf("\n");
@@ -328,7 +345,7 @@ if (argc == 6){
     printf("'--set' operation requires two integer parameters.\n");
     exit;
     } else {
-
+    cout << "accept command"<<endl;
     if(sscanf(argv[2], "%d", &DEVICE) != 1 ){
             printf("'--set' operation requires 1 integer parameter.\n");
             exit;
@@ -340,7 +357,7 @@ if (argc == 6){
     int pcfbuf = readwritebuffer(0,0);
     std::bitset<8> buffer = pcfbuf;   
     
-	set(buffer,relay,status);             //запрос
+	set(buffer,relay-1,status);             //запрос
     
     } 
     
